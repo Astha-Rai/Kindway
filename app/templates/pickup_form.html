@@ -1,0 +1,22 @@
+<!-- pickup_form.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>Pickup Request</h2>
+<form method="POST" action="/pickup_submit">
+    <input type="hidden" name="ngo_id" value="{{ ngo_id }}">
+    <input type="text" name="pickup_address" placeholder="Pickup Address" required>
+    <input type="date" name="preferred_date" required>
+    <input type="text" name="category" placeholder="Category (e.g. Food)" required>
+    <textarea name="description" placeholder="What are you donating?" required></textarea>
+    <button type="submit">Submit Request</button>
+</form>
+{% endblock %}
+
+<!-- donate_info.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>Donate to {{ ngo_name }}</h2>
+<p>Address: {{ ngo_address }}</p>
+<p>Phone: {{ ngo_phone }}</p>
+<p>Drop off your items during working hours.</p>
+{% endblock %}

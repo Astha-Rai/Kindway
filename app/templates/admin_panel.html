@@ -1,0 +1,82 @@
+<!-- templates/admin_dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - KindWay{% endblock %}
+
+{% block content %}
+<h2>🛡️ Admin Dashboard</h2>
+
+<!-- Section 1: All Users -->
+<h3>🗂️ All Registered Users</h3>
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Total Donations</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{ user[0] }}</td>
+      <td>{{ user[1] }}</td>
+      <td>{{ user[2] }}</td>
+      <td>{{ user[3] }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4">No registered users found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+
+<!-- Section 2: All NGOs -->
+<h3>📑 NGOs</h3>
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>NGO ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Location</th>
+      <th>Contact</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ngo in ngos %}
+    <tr>
+      <td>{{ ngo[0] }}</td>
+      <td>{{ ngo[1] }}</td>
+      <td>{{ ngo[2] }}</td>
+      <td>{{ ngo[3] }}</td>
+      <td>{{ ngo[4] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+
+<!-- Section 3: Donations per NGO -->
+<h3>🧁 Total Donations per NGO</h3>
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>NGO Name</th>
+      <th>Donation Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in donations_per_ngo %}
+    <tr>
+      <td>{{ row[0] }}</td>
+      <td>{{ row[1] }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="2">No donation data found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

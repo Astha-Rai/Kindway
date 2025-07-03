@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="home">
+    <h2>Find NGOs Near You</h2>
+    <form method="POST" action="/search">
+        <input type="text" name="category" placeholder="e.g. Food" required>
+        <input type="text" name="location" placeholder="Your City or Area" required>
+        <button type="submit">Search</button>
+    </form>
+</section>
+{% endblock %}
+
