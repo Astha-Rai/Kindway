@@ -1,6 +1,8 @@
 # config.py
 
-DB_HOST = 'localhost'
-DB_USER = 'flaskuser'
-DB_PASSWORD = 'flaskpass'
-DB_NAME = 'kindway'
+SECRET_KEY = "yoursecretkey"
+
+MYSQL_HOST = "localhost"
+MYSQL_USER = "root"
+MYSQL_PASSWORD = "Shivadeanushka@123"
+MYSQL_DB = "kindway"
