@@ -119,23 +119,24 @@ def logout():
 # ---------------- Donor Dashboard ----------------
 @app.route('/user/dashboard')
 def user_dashboard():
-    if 'user_id' not in session or session['role'] != 'Donor':
+    if 'user_id' not in session:
         return redirect(url_for('login'))
 
+    user_id = session['user_id']
     cur = mysql.connection.cursor()
     cur.execute("""
-        SELECT di.item_name, c.name AS category,
-               IFNULL(dr.donation_type, 'Not Requested') AS donation_type,
-               IFNULL(dr.status, 'Pending') AS status
-        FROM DonationItem di
-        JOIN Category c ON di.category_id = c.category_id
-        LEFT JOIN DonationRequest dr ON di.item_id = dr.item_id
-        WHERE di.user_id = %s
-    """, (session['user_id'],))
+    SELECT c.name AS category, d.item_name, d.description, d.created_at AS date
+    FROM DonationItem d
+    JOIN Category c ON d.category_id = c.category_id
+    WHERE d.user_id = %s
+    ORDER BY d.created_at DESC
+    LIMIT 5
+""", (user_id,))
+
     donations = cur.fetchall()
     cur.close()
 
-    return render_template('user_dashboard.html', user_name=session['user_name'], donations=donations)
+    return render_template('user_dashboard.html', donations=donations)
 
 # ---------------- NGO Dashboard ----------------
 @app.route('/ngo/dashboard')
@@ -312,3 +313,17 @@ def request_pickup(ngo_id, category):
 @app.route('/about')
 def about():
     return render_template('about.html')
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+
+        # For now, just print or store it. Later, connect SMTP to send it.
+        print(f"Message from {name} ({email}): {message}")
+        flash('Thank you for reaching out! We will get back to you soon.')
+
+        return redirect(url_for('contact'))
+
+    return render_template('contact.html')
